@@ -12,7 +12,7 @@ const NavBar = () => {
             dest="/new-entry"
             label="New Entry"
         />
-        <button className="w-24 h-8 mr-8 absolute right-0 text-[#808180] border-2 border-[#808180] rounded-xl">Log out</button>
+        <button className="w-24 h-8 mr-8 absolute right-0 text-[#808180] font-bold border-2 border-[#808180] rounded-xl">Log out</button>
     </nav>
   )
 }
