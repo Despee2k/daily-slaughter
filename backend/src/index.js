@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const db = require('./queries');
@@ -12,6 +13,7 @@ app.use(
         extended: true,
     })
 );
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.json({ info: "Node.js, Express, and Postgres API" });
