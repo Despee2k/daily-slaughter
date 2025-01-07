@@ -25,15 +25,15 @@ const getEntriesByDate = (req, res) => {
 }
 
 const addEntry = (req, res) => {
-    const { LiveWeight, CarcassWeight }= req.body;
+    const { LiveWeight, CarcassWeight, DateAdded } = req.body;
     let Classification;
 
     if(LiveWeight < 90) Classification = "Grower";
     else if (LiveWeight >= 90 && LiveWeight < 120) Classification = "Fattener";
     else Classification = "Culd";
 
-    pool.query(`INSERT INTO "public"."Entries" ("LiveWeight", "CarcassWeight", "Classification") VALUES ($1, $2, $3)`,
-        [LiveWeight, CarcassWeight, Classification],
+    pool.query(`INSERT INTO "public"."Entries" ("LiveWeight", "CarcassWeight", "Classification", "DateAdded") VALUES ($1, $2, $3, $4)`,
+        [LiveWeight, CarcassWeight, Classification, DateAdded],
         (error, results) => {
             if(error){
                 throw error;
