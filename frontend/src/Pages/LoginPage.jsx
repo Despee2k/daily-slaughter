@@ -1,17 +1,19 @@
-import LoginForm from "../Components/Login/LoginForm"
+import LoginForm from "../Components/Login/LoginForm";
 
-const LoginPage = () => {
+const LoginPage = ({ setToken }) => {
   return (
     <div>
-      <h1 className="text-[#808180] font-extrabold text-2xl mb-16 p-4">Daily Slaughter</h1>
-      <div className="flex justify-center mb-4">
-        <h1 className="text-[#808180] font-bold text-3xl">LOGIN</h1>
+      <h1 className="mb-16 p-4 text-2xl font-extrabold text-[#808180]">
+        Daily Slaughter
+      </h1>
+      <div className="mb-4 flex justify-center">
+        <h1 className="text-3xl font-bold text-[#808180]">LOGIN</h1>
       </div>
       <main className="flex items-center justify-center">
-          <LoginForm />
+        <LoginForm setToken={setToken} />
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

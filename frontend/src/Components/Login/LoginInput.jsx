@@ -1,13 +1,17 @@
-const LoginInput = ({ label, placeholder}) => {
+const LoginInput = ({ label, placeholder, name, value, onChange, type }) => {
   return (
-    <div className="flex flex-col mt-8">
-      <label className="text-[#808180] ml-8 mb-2 text-lg">{label}</label>
+    <div className="mt-8 flex flex-col">
+      <label className="mb-2 ml-8 text-lg text-[#808180]">{label}</label>
       <input
-        type="text"
-        className="text-[#808180] w-80 mx-auto p-2 rounded-md border-2 focus:outline-none focus:ring focus:ring-[#808180]" 
-        placeholder={placeholder}></input>
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="mx-auto w-80 rounded-md border-2 p-2 text-[#808180] focus:border-transparent focus:outline-none focus:ring focus:ring-[#808180]"
+        placeholder={placeholder}
+      ></input>
     </div>
-  )
-}
+  );
+};
 
-export default LoginInput
+export default LoginInput;
