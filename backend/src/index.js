@@ -24,4 +24,6 @@ app.post("/add-entry", db.addEntry);
 app.put("/update-entry", db.updateEntry);
 app.delete("/delete-entry", db.deleteEntry);
 
+app.post("/login", db.login);
+
 app.listen(PORT, () => console.log("Server is listening!"));
