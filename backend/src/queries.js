@@ -15,8 +15,11 @@ const pool = new Pool ({
 // app.delete("/delete-entry", db.deleteEntry);
 
 const getEntriesByDate = (req, res) => {
-    const date = req.query.date;
-    pool.query(`SELECT * FROM Entries WHERE Date=${date}`, (error, results) => {
+    const date = req.query.DateAdded;
+
+    pool.query(`SELECT * FROM "public"."Entries" WHERE "DateAdded" = $1`,
+        [date],
+        (error, results) => {
         if(error){
             throw error;
         }
