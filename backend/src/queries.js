@@ -13,11 +13,6 @@ const pool = new Pool ({
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// app.get("/entries-by-date", db.getEntriesByDate);
-// app.post("/add-entry", db.addEntry);
-// app.put("/update-entry", db.updateEntry);
-// app.delete("/delete-entry", db.deleteEntry);
-
 const getEntriesByDate = (req, res) => {
     const date = req.query.DateAdded;
 
@@ -149,7 +144,6 @@ const getAnalyticsByMonth = async (req, res) => {
 
         const organizedData = {};
         results.rows.forEach(row => {
-            // Ensure the date is formatted in Philippine Time (UTC+8)
             const date = new Date(row.DateAdded).toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
             if (!organizedData[date]) {
                 organizedData[date] = {
