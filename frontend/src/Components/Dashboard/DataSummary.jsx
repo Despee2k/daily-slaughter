@@ -71,7 +71,7 @@ const DataSummary = ({ selectedYear, selectedMonth }) => {
                 Fattener
               </th>
               <th className={THcss} colSpan="3">
-                Culd
+                Cull
               </th>
             </tr>
             <tr>
