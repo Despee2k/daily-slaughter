@@ -1,25 +1,76 @@
-import WeightInput from "./WeightInput";
+import DataInput from "./DataInput";
 import Button from "../UI/Button";
+import { useState } from "react";
+import axios from 'axios';
 
-const DetailEntry = () => {
+const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
+  const [inputData, setinputData] = useState({
+    DateAdded: selectedDate,
+    LiveWeight: "",
+    CarcassWeight: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setinputData({
+      ...inputData,
+      [name]: value,
+    });
+
+    if(name === "DateAdded"){
+      setSelectedDate(value);
+    }
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    axios.post(`http://localhost:5000/add-entry`, inputData)
+      .then(() => {
+        triggerRefresh();
+
+        setinputData({
+          ...inputData,
+          LiveWeight: "",
+          CarcassWeight: "",
+        });
+      })
+  }
+
   return (
     <div>
       <h1 className="mb-2 ml-2 text-xl font-bold text-[#808180]">
         Enter Details
       </h1>
-      <div className="h-72 w-64 rounded-2xl bg-[#FFFFFF] p-4 shadow-md">
-        <WeightInput label="Live Weight" />
-        <WeightInput label="Carcass Weight" />
-        <div className="mt-8 grid grid-cols-2">
-          <Button
-            label="Reset"
-            style="w-24 h-8 text-[#FFFFFF] bg-[#FA2A55] rounded-xl mx-auto text-lg hover:bg-[#D5204C]"
+      <div className="h-96 w-64 rounded-2xl bg-[#FFFFFF] p-4 shadow-md">
+        <form onSubmit={submitForm}>
+          <DataInput
+            type="date"
+            name="DateAdded"
+            value={inputData.DateAdded} 
+            onChange={handleChange}
+            label="Choose Date" 
+          />
+          <DataInput
+            type="number"
+            name="LiveWeight"
+            value={inputData.LiveWeight} 
+            onChange={handleChange}
+            label="Live Weight" 
+          />
+          <DataInput
+            type="number"
+            name="CarcassWeight"
+            value={inputData.CarcassWeight} 
+            onChange={handleChange}
+            label="Carcass Weight" 
           />
           <Button
             label="Save"
-            style="w-24 h-8 text-[#FFFFFF] bg-[#4169E1] rounded-xl mx-auto text-lg hover:bg-[#3654C9]"
+            style="w-full h-8 mt-8 text-[#FFFFFF] bg-[#4169E1] rounded-xl mx-auto text-lg hover:bg-[#3654C9]"
           />
-        </div>
+        </form>
       </div>
     </div>
   );
