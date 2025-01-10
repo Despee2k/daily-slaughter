@@ -2,7 +2,7 @@ import NavBar from "../Components/UI/NavBar"
 import CategoryCard from "../Components/Dashboard/CategoryCard"
 import Select from 'react-select';
 
-const HomePage = () => {
+const HomePage = ({ handleLogout }) => {
   const options = [
     { value: 'latest', label: 'Latest'},
     { value: 'monthyl', label: 'Monthly'},
@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <div>
       <header>
-        <NavBar /> 
+        <NavBar handleLogout={handleLogout} /> 
       </header>
       <main className="mx-40">
         <div className="flex justify-end my-10">
