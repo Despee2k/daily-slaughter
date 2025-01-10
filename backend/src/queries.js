@@ -33,6 +33,10 @@ const getEntriesByDate = (req, res) => {
 
 const addEntry = (req, res) => {
     const { LiveWeight, CarcassWeight, DateAdded } = req.body;
+    if (!LiveWeight || !CarcassWeight || !DateAdded) {
+        return res.status(400).send('All fields are required!');
+    }
+
     let Classification;
 
     if(LiveWeight < 90) Classification = "Grower";
