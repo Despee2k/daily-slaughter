@@ -5,8 +5,8 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
   const [entries, setEntries] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({
-    LiveWeight: '',
-    CarcassWeight: ''
+    LiveWeight: "",
+    CarcassWeight: "",
   });
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
       const fetchEntries = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`
+            `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
           );
           setEntries(response.data);
         } catch (error) {
@@ -31,11 +31,11 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
     try {
       await axios.delete(`http://localhost:5000/delete-entry?id=${id}`);
       const response = await axios.get(
-        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`
+        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
       );
       setEntries(response.data);
     } catch (error) {
-      console.error('Error deleting entry:', error);
+      console.error("Error deleting entry:", error);
     }
   };
 
@@ -44,7 +44,7 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
     setEditingId(entry.id);
     setEditForm({
       LiveWeight: entry.LiveWeight,
-      CarcassWeight: entry.CarcassWeight
+      CarcassWeight: entry.CarcassWeight,
     });
   };
 
@@ -53,15 +53,15 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
     try {
       await axios.put(
         `http://localhost:5000/update-entry?id=${editingId}`,
-        editForm
+        editForm,
       );
       const response = await axios.get(
-        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`
+        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
       );
       setEntries(response.data);
       setEditingId(null);
     } catch (error) {
-      console.error('Error updating entry:', error);
+      console.error("Error updating entry:", error);
     }
   };
 
@@ -71,7 +71,8 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
     "px-3 text-[#FFFFFF] bg-[#FA2A55] rounded-md mx-auto hover:bg-[#D5204C]";
   let BUTTON2css =
     "px-3 text-[#FFFFFF] bg-[#4169E1] rounded-md mx-auto hover:bg-[#3654C9]";
-  let inputCss = "w-20 rounded-md border-2 p-1 text-[#808180] focus:border-transparent focus:outline-none focus:ring focus:ring-[#808180]";
+  let inputCss =
+    "w-20 rounded-md border-2 p-1 text-[#808180] focus:border-transparent focus:outline-none focus:ring focus:ring-[#808180]";
 
   return (
     <div>
@@ -109,10 +110,12 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
                       type="number"
                       className={inputCss}
                       value={editForm.LiveWeight}
-                      onChange={(e) => setEditForm({
-                        ...editForm,
-                        LiveWeight: e.target.value
-                      })}
+                      onChange={(e) =>
+                        setEditForm({
+                          ...editForm,
+                          LiveWeight: e.target.value,
+                        })
+                      }
                     />
                   ) : (
                     entry.LiveWeight
@@ -124,10 +127,12 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
                       type="number"
                       className={inputCss}
                       value={editForm.CarcassWeight}
-                      onChange={(e) => setEditForm({
-                        ...editForm,
-                        CarcassWeight: e.target.value
-                      })}
+                      onChange={(e) =>
+                        setEditForm({
+                          ...editForm,
+                          CarcassWeight: e.target.value,
+                        })
+                      }
                     />
                   ) : (
                     entry.CarcassWeight
@@ -138,17 +143,20 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
                   <button
                     className={BUTTON1css}
                     onClick={() => handleDelete(entry.id)}
-                  >D</button>
+                  >
+                    D
+                  </button>
                   {editingId === entry.id ? (
-                    <button
-                      className={BUTTON2css}
-                      onClick={handleSaveEdit}
-                    >S</button>
+                    <button className={BUTTON2css} onClick={handleSaveEdit}>
+                      S
+                    </button>
                   ) : (
                     <button
                       className={BUTTON2css}
                       onClick={() => handleEdit(entry)}
-                    >E</button>
+                    >
+                      E
+                    </button>
                   )}
                 </td>
               </tr>

@@ -1,7 +1,7 @@
 import DataInput from "./DataInput";
 import Button from "../UI/Button";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
   const [inputData, setinputData] = useState({
@@ -18,7 +18,7 @@ const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
       [name]: value,
     });
 
-    if(name === "DateAdded"){
+    if (name === "DateAdded") {
       setSelectedDate(value);
     }
   };
@@ -26,17 +26,16 @@ const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
   const submitForm = (e) => {
     e.preventDefault();
 
-    axios.post(`http://localhost:5000/add-entry`, inputData)
-      .then(() => {
-        triggerRefresh();
+    axios.post(`http://localhost:5000/add-entry`, inputData).then(() => {
+      triggerRefresh();
 
-        setinputData({
-          ...inputData,
-          LiveWeight: "",
-          CarcassWeight: "",
-        });
-      })
-  }
+      setinputData({
+        ...inputData,
+        LiveWeight: "",
+        CarcassWeight: "",
+      });
+    });
+  };
 
   return (
     <div>
@@ -48,23 +47,23 @@ const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
           <DataInput
             type="date"
             name="DateAdded"
-            value={inputData.DateAdded} 
+            value={inputData.DateAdded}
             onChange={handleChange}
-            label="Choose Date" 
+            label="Choose Date"
           />
           <DataInput
             type="number"
             name="LiveWeight"
-            value={inputData.LiveWeight} 
+            value={inputData.LiveWeight}
             onChange={handleChange}
-            label="Live Weight" 
+            label="Live Weight"
           />
           <DataInput
             type="number"
             name="CarcassWeight"
-            value={inputData.CarcassWeight} 
+            value={inputData.CarcassWeight}
             onChange={handleChange}
-            label="Carcass Weight" 
+            label="Carcass Weight"
           />
           <Button
             label="Save"

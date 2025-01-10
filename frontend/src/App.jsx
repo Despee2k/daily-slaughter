@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useState } from "react";
 import Dashboard from "./Pages/Dashboard";
 import LoginPage from "./Pages/LoginPage";
@@ -19,13 +24,21 @@ const App = () => {
         <Route
           path="/"
           element={
-            token ? <Dashboard handleLogout={handleLogout} /> : <Navigate to="/login" />
+            token ? (
+              <Dashboard handleLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
         <Route
           path="/new-entry"
           element={
-            token ? <NewEntry handleLogout={handleLogout} /> : <Navigate to="/login" />
+            token ? (
+              <NewEntry handleLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
       </Routes>
