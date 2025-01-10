@@ -26,4 +26,7 @@ app.delete("/delete-entry", db.deleteEntry);
 
 app.post("/login", db.login);
 
+app.get("/analytics/month", db.getAnalyticsByMonth);
+app.get("/analytics/year", db.getYearlyAnalytics);
+
 app.listen(PORT, () => console.log("Server is listening!"));

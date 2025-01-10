@@ -127,10 +127,98 @@ const login = async (req, res) => {
     }
 };
 
+const getAnalyticsByMonth = async (req, res) => {
+    const { year, month } = req.query;
+
+    try {
+        const query = `
+            SELECT 
+                ("DateAdded" AT TIME ZONE 'Asia/Singapore')::date as "DateAdded",
+                "Classification",
+                AVG("LiveWeight") as "AvgLiveWeight",
+                AVG("CarcassWeight") as "AvgCarcassWeight",
+                COUNT(*) as "TotalCount"
+            FROM "public"."Entries"
+            WHERE 
+                EXTRACT(YEAR FROM ("DateAdded" AT TIME ZONE 'Asia/Singapore')::date) = $1
+                AND EXTRACT(MONTH FROM ("DateAdded" AT TIME ZONE 'Asia/Singapore')::date) = $2
+            GROUP BY ("DateAdded" AT TIME ZONE 'Asia/Singapore')::date, "Classification"
+            ORDER BY ("DateAdded" AT TIME ZONE 'Asia/Singapore')::date`;
+
+        const results = await pool.query(query, [year, month]);
+
+        const organizedData = {};
+        results.rows.forEach(row => {
+            // Ensure the date is formatted in Philippine Time (UTC+8)
+            const date = new Date(row.DateAdded).toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
+            if (!organizedData[date]) {
+                organizedData[date] = {
+                    Grower: { avgLW: 0, avgCW: 0, count: 0 },
+                    Fattener: { avgLW: 0, avgCW: 0, count: 0 },
+                    Culd: { avgLW: 0, avgCW: 0, count: 0 }
+                };
+            }
+            organizedData[date][row.Classification] = {
+                avgLW: parseFloat(row.AvgLiveWeight || 0).toFixed(2),
+                avgCW: parseFloat(row.AvgCarcassWeight || 0).toFixed(2),
+                count: parseInt(row.TotalCount || 0)
+            };
+        });
+
+        res.status(200).json(organizedData);
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+};
+
+const getYearlyAnalytics = async (req, res) => {
+    const { year } = req.query;
+    
+    try {
+        const query = `
+            SELECT 
+                EXTRACT(MONTH FROM "DateAdded"::date) as month,
+                "Classification",
+                AVG("LiveWeight") as "AvgLiveWeight",
+                AVG("CarcassWeight") as "AvgCarcassWeight",
+                COUNT(*) as "TotalCount"
+            FROM "public"."Entries"
+            WHERE EXTRACT(YEAR FROM "DateAdded"::date) = $1
+            GROUP BY month, "Classification"
+            ORDER BY month`;
+
+        const results = await pool.query(query, [year]);
+        
+        const organizedData = {};
+        results.rows.forEach(row => {
+            const month = parseInt(row.month);
+            if (!organizedData[month]) {
+                organizedData[month] = {
+                    Grower: { avgLW: 0, avgCW: 0, count: 0 },
+                    Fattener: { avgLW: 0, avgCW: 0, count: 0 },
+                    Culd: { avgLW: 0, avgCW: 0, count: 0 }
+                };
+            }
+            organizedData[month][row.Classification] = {
+                avgLW: parseFloat(row.AvgLiveWeight).toFixed(2),
+                avgCW: parseFloat(row.AvgCarcassWeight).toFixed(2),
+                count: parseInt(row.TotalCount)
+            };
+        });
+
+        res.status(200).json(organizedData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};
+
 module.exports = {
     getEntriesByDate,
     addEntry,
     updateEntry,
     deleteEntry,
     login,
+    getAnalyticsByMonth,
+    getYearlyAnalytics,
 }
