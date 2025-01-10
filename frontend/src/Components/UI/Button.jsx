@@ -1,9 +1,9 @@
 const Button = ({ label, style }) => {
   return (
-    <div>
-      <button className={style}>{label}</button>
-    </div>
-  )
-}
+    <button type="submit" className={style}>
+      {label}
+    </button>
+  );
+};
 
-export default Button
+export default Button;
