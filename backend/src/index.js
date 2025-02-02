@@ -27,12 +27,4 @@ app.post("/api/login", db.login);
 app.get("/api/analytics/month", db.getAnalyticsByMonth);
 app.get("/api/analytics/year", db.getYearlyAnalytics);
 
-// Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, '../..', 'frontend/dist')));
-
-// Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../..', 'frontend/dist', 'index.html'));
-});
-
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}!`));
