@@ -3,6 +3,7 @@ import Button from "../UI/Button";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config/api";
 
 const LoginForm = ({ setToken }) => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ const LoginForm = ({ setToken }) => {
     e.preventDefault();
     try {
       console.log(username, password);
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         Username: username,
         Password: password,
       });

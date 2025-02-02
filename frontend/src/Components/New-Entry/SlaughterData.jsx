@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const SlaughterData = ({ selectedDate, refreshFlag }) => {
   const [entries, setEntries] = useState([]);
@@ -14,7 +15,7 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
       const fetchEntries = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
+            `${API_BASE_URL}/entries-by-date?DateAdded=${selectedDate}`,
           );
           setEntries(response.data);
         } catch (error) {
@@ -29,9 +30,9 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
   // Handle delete entry
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/delete-entry?id=${id}`);
+      await axios.delete(`${API_BASE_URL}/delete-entry?id=${id}`);
       const response = await axios.get(
-        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
+        `${API_BASE_URL}/entries-by-date?DateAdded=${selectedDate}`,
       );
       setEntries(response.data);
     } catch (error) {
@@ -52,11 +53,11 @@ const SlaughterData = ({ selectedDate, refreshFlag }) => {
   const handleSaveEdit = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/update-entry?id=${editingId}`,
+        `${API_BASE_URL}/update-entry?id=${editingId}`,
         editForm,
       );
       const response = await axios.get(
-        `http://localhost:5000/entries-by-date?DateAdded=${selectedDate}`,
+        `${API_BASE_URL}/entries-by-date?DateAdded=${selectedDate}`,
       );
       setEntries(response.data);
       setEditingId(null);

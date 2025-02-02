@@ -2,6 +2,7 @@ import DataInput from "./DataInput";
 import Button from "../UI/Button";
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
   const [inputData, setinputData] = useState({
@@ -26,7 +27,7 @@ const DetailEntry = ({ selectedDate, setSelectedDate, triggerRefresh }) => {
   const submitForm = (e) => {
     e.preventDefault();
 
-    axios.post(`http://localhost:5000/add-entry`, inputData).then(() => {
+    axios.post(`${API_BASE_URL}/add-entry`, inputData).then(() => {
       triggerRefresh();
 
       setinputData({

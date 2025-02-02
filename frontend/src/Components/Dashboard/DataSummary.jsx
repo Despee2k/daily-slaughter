@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const DataSummary = ({ selectedYear, selectedMonth }) => {
   const [analyticsData, setAnalyticsData] = useState({});
@@ -15,8 +16,8 @@ const DataSummary = ({ selectedYear, selectedMonth }) => {
       try {
         const endpoint =
           selectedMonth === "yearly"
-            ? `http://localhost:5000/analytics/year?year=${selectedYear}`
-            : `http://localhost:5000/analytics/month?year=${selectedYear}&month=${selectedMonth}`;
+            ? `${API_BASE_URL}/analytics/year?year=${selectedYear}`
+            : `${API_BASE_URL}/analytics/month?year=${selectedYear}&month=${selectedMonth}`;
 
         const response = await axios.get(endpoint);
         setAnalyticsData(response.data || {});
